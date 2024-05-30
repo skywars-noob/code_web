@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Code Viewer</title>
+    <style>
+        body {
+            background-color: #2e2e2e;
+            color: #f8f8f2;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        #code-container {
+            width: 80%;
+            background-color: #1e1e1e;
+            border: 1px solid #555;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        h1 {
+            color: #66d9ef;
+        }
+    </style>
+</head>
+<body>
+    <h1>GitHub Code Viewer</h1>
+    <div id="code-container">Loading...</div>
 
+    <script>
+        async function fetchGitHubFile(repo, filePath) {
+            const url = `https://api.github.com/repos/${repo}/contents/${filePath}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                if (data.content) {
+                    const content = atob(data.content);
+                    document.getElementById('code-container').textContent = content;
+                } else {
+                    document.getElementById('code-container').textContent = 'File content could not be loaded.';
+                }
+            } catch (error) {
+                document.getElementById('code-container').textContent = 'Error fetching file: ' + error;
+            }
+        }
+
+        // Example usage:
+        const repo = 'octocat/Hello-World';  // Replace with your repository
+        const filePath = 'README.md';        // Replace with the path to the file you want to fetch
+        fetchGitHubFile(repo, filePath);
+    </script>
+</body>
+</html>
