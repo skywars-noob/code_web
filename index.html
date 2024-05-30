@@ -46,14 +46,21 @@
             const url = `https://api.github.com/users/${username}/repos`;
             try {
                 const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
                 const repos = await response.json();
                 const container = document.getElementById('repo-container');
                 container.innerHTML = '';  // Clear the loading message
-                repos.forEach(repo => {
-                    const repoElement = document.createElement('div');
-                    repoElement.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a>`;
-                    container.appendChild(repoElement);
-                });
+                if (repos.length === 0) {
+                    container.textContent = 'No repositories found.';
+                } else {
+                    repos.forEach(repo => {
+                        const repoElement = document.createElement('div');
+                        repoElement.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a>`;
+                        container.appendChild(repoElement);
+                    });
+                }
             } catch (error) {
                 document.getElementById('repo-container').textContent = 'Error fetching repositories: ' + error;
             }
