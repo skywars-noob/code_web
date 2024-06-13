@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Repositories Viewer</title>
+    <title>Skywars Noob的Code網站</title>
     <style>
         body {
             background-color: #2e2e2e;
@@ -38,7 +38,9 @@
     </style>
 </head>
 <body>
-    <h1>GitHub Repositories Viewer</h1>
+    <h1>嗨，歡迎來到我的網站</h1>
+    <p>這裡會自動同步我在GitHub上的專案</p>
+    <p>點進入就可以查看了</p>
     <div id="repo-container">Loading...</div>
 
     <script>
@@ -53,11 +55,11 @@
                 const container = document.getElementById('repo-container');
                 container.innerHTML = '';  // Clear the loading message
                 if (repos.length === 0) {
-                    container.textContent = 'No repositories found.';
+                    container.textContent = '未找到專案。';
                 } else {
                     repos.forEach(repo => {
                         const repoElement = document.createElement('div');
-                        repoElement.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a>`;
+                        repoElement.innerHTML = `<p>${repo.name}</p><a href="${repo.html_url}" target="_blank">進入</a>`;
                         container.appendChild(repoElement);
                     });
                 }
@@ -66,7 +68,7 @@
             }
         }
 
-        // Example usage:
+        //use:
         const username = 'skywars-noob';  // Replace with your GitHub username
         fetchGitHubRepos(username);
     </script>
