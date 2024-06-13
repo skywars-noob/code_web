@@ -35,6 +35,16 @@
         a:hover {
             text-decoration: underline;
         }
+        .repo {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border-radius: 5px;
+        }
+        .repo-name {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -49,7 +59,7 @@
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
+                    throw new Error('網路怪怪的 ' + response.statusText);
                 }
                 const repos = await response.json();
                 const container = document.getElementById('repo-container');
@@ -59,7 +69,11 @@
                 } else {
                     repos.forEach(repo => {
                         const repoElement = document.createElement('div');
-                        repoElement.innerHTML = `<p>${repo.name}</p><a href="${repo.html_url}" target="_blank">進入</a>`;
+                        repoElement.className = 'repo';
+                        repoElement.innerHTML = `
+                            <div class="repo-name">${repo.name}</div>
+                            <div><a href="${repo.html_url}" target="_blank">進入</a></div>
+                        `;
                         container.appendChild(repoElement);
                     });
                 }
@@ -68,7 +82,7 @@
             }
         }
 
-        //use:
+        // 使用你的GitHub用戶名
         const username = 'skywars-noob';  // Replace with your GitHub username
         fetchGitHubRepos(username);
     </script>
